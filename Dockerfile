@@ -30,26 +30,25 @@ RUN mkdir -p /tmp/vocal_removal
 COPY handler.py .
 
 # Pre-download models to reduce cold start time
-RUN python3 -c "
-from demucs.pretrained import get_model
-import torch
-print('Pre-downloading models...')
-try:
-    model = get_model('htdemucs_ft')
-    print('Downloaded htdemucs_ft')
-    del model
-    torch.cuda.empty_cache()
-except:
-    pass
-try:
-    model = get_model('htdemucs')
-    print('Downloaded htdemucs')
-    del model
-    torch.cuda.empty_cache()
-except:
-    pass
-print('Model pre-download complete')
-"
+RUN python3 -c "\
+from demucs.pretrained import get_model; \
+import torch; \
+print('Pre-downloading models...'); \
+try: \
+    model = get_model('htdemucs_ft'); \
+    print('Downloaded htdemucs_ft'); \
+    del model; \
+    torch.cuda.empty_cache(); \
+except: \
+    pass; \
+try: \
+    model = get_model('htdemucs'); \
+    print('Downloaded htdemucs'); \
+    del model; \
+    torch.cuda.empty_cache(); \
+except: \
+    pass; \
+print('Model pre-download complete')"
 
 # Set environment variables
 ENV PYTHONPATH=/app
